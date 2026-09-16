@@ -1,0 +1,24 @@
+# Auto-detect text files and normalize to LF on commit
+* text=auto eol=lf
+
+# Explicitly declare text files
+*.ts    text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.md    text eol=lf
+*.html  text eol=lf
+*.css   text eol=lf
+
+# Binary files
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.webp  binary
+
+# Windows scripts should use CRLF
+*.bat   text eol=crlf
+*.cmd   text eol=crlf

@@ -1,0 +1,22 @@
+{
+  "name": "epicbet-playwright-tests",
+  "version": "1.0.0",
+  "description": "Automated E2E tests for EpicBet (Playwright + TypeScript)",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:smoke": "playwright test tests/smoke",
+    "test:e2e": "playwright test tests/e2e",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen https://epicbet.com/",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.5.1",
+    "typescript": "^7.0.2"
+  }
+}
