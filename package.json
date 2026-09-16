@@ -1,7 +1,7 @@
 {
   "name": "epicbet-playwright-tests",
   "version": "1.0.0",
-  "description": "Automated E2E tests for EpicBet (Playwright + TypeScript)",
+  "description": "Automated E2E tests for EpicBet (Playwright + TypeScript + Allure)",
   "private": true,
   "scripts": {
     "test": "playwright test",
@@ -13,7 +13,6 @@
     "test:critical": "playwright test --grep \"@critical\"",
     "test:navigation": "playwright test --grep \"@navigation\"",
     "test:search": "playwright test --grep \"@search\"",
-    "report": "playwright show-report",
     "allure:generate": "allure generate ./allure-results --clean -o ./allure-report",
     "allure:open": "allure open ./allure-report",
     "allure:serve": "allure serve ./allure-results",

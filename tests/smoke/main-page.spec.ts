@@ -1,14 +1,13 @@
 import { test, expect } from '../../src/fixtures/base.fixture';
 
 /**
- * Smoke: home page
+ * Smoke: MainPage
  *
- * Verifies that the home page loads and shows the main UI element
- * (search button) within the expected time.
+ * Verifies that the main page loads and the main UI element is visible.
  *
  * Test ID: SMOKE-001
  */
-test.describe('Smoke: home page', () => {
+test.describe('Smoke: MainPage', () => {
   test(
     'loads and shows main UI elements',
     {
@@ -16,18 +15,17 @@ test.describe('Smoke: home page', () => {
       annotation: [
         { type: 'severity', description: 'critical' },
         { type: 'owner', description: 'Ilja323' },
-        { type: 'feature', description: 'Home' },
+        { type: 'feature', description: 'MainPage' },
         { type: 'story', description: 'SMOKE-001' },
-        { type: 'description', description: 'Home page loads and main UI is visible' },
       ],
     },
-    async ({ homePage }) => {
+    async ({ mainPage }) => {
       await test.step('Verify page title is set', async () => {
-        await expect(homePage.page).toHaveTitle(/./);
+        await expect(mainPage.page).toHaveTitle(/./);
       });
 
       await test.step('Verify search button is visible', async () => {
-        await expect(homePage.searchButton).toBeVisible({ timeout: 15_000 });
+        await expect(mainPage.searchButton).toBeVisible({ timeout: 15_000 });
       });
     }
   );

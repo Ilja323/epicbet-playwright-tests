@@ -20,20 +20,20 @@ export default defineConfig({
   retries: isCI ? 1 : 0,
 
   reporter: [
+    // Console-only reporter for live feedback during a run
     ['list'],
-    ['html', { open: 'never', outputFolder: 'playwright-report' }],
-    ['junit', { outputFile: 'results.xml' }],
+    // Single source of truth for reports — Allure
     [
       'allure-playwright',
       {
         resultsDir: 'allure-results',
-        detail: true,         // шаги внутри теста
-        suiteTitle: true,     // группировка по describe
+        detail: true,
+        suiteTitle: true,
         environmentInfo: {
           Framework: 'Playwright',
           Language: 'TypeScript',
           Node: process.version,
-          CI: isCI ? 'GitHub Actions' : 'Local',
+          Environment: isCI ? 'GitHub Actions' : 'Local',
         },
       },
     ],
