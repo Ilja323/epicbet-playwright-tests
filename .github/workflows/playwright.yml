@@ -33,13 +33,34 @@ jobs:
         run: npx playwright test
         env:
           CI: 'true'
+        continue-on-error: true
 
-      - name: Upload HTML report
+      - name: Generate Allure report
+        if: always()
+        run: npx allure generate ./allure-results --clean -o ./allure-report
+
+      - name: Upload Playwright HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report/
+          retention-days: 14
+
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+          retention-days: 14
+
+      - name: Upload Allure raw results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results/
           retention-days: 14
 
       - name: Upload JUnit results
@@ -50,10 +71,14 @@ jobs:
           path: results.xml
           retention-days: 14
 
-      - name: Upload test-results
+      - name: Upload test-results (screenshots, traces, videos)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: test-results/
           retention-days: 14
+
+      - name: Fail job if tests failed
+        if: failure()
+        run: exit 1

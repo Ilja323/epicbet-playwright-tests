@@ -11,12 +11,17 @@
     "test:smoke": "playwright test tests/smoke",
     "test:e2e": "playwright test tests/e2e",
     "report": "playwright show-report",
+    "allure:generate": "allure generate ./allure-results --clean -o ./allure-report",
+    "allure:open": "allure open ./allure-report",
+    "allure:serve": "allure serve ./allure-results",
     "codegen": "playwright codegen https://epicbet.com/",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
     "@types/node": "^26.5.1",
+    "allure-commandline": "^2.32.0",
+    "allure-playwright": "^3.0.0",
     "typescript": "^7.0.2"
   }
 }

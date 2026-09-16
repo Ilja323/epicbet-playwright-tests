@@ -13,32 +13,38 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
 
-  // В CI даём больше времени (холодный старт, Cloudflare)
   timeout: 90_000,
   expect: { timeout: 15_000 },
 
-  // В CI падаем, если остался test.only
   forbidOnly: isCI,
-
-  // 1 retry в CI — на случай flaky Cloudflare
   retries: isCI ? 1 : 0,
 
   reporter: [
     ['list'],
     ['html', { open: 'never', outputFolder: 'playwright-report' }],
     ['junit', { outputFile: 'results.xml' }],
+    [
+      'allure-playwright',
+      {
+        resultsDir: 'allure-results',
+        detail: true,         // шаги внутри теста
+        suiteTitle: true,     // группировка по describe
+        environmentInfo: {
+          Framework: 'Playwright',
+          Language: 'TypeScript',
+          Node: process.version,
+          CI: isCI ? 'GitHub Actions' : 'Local',
+        },
+      },
+    ],
   ],
 
   use: {
     baseURL: process.env.BASE_URL ?? 'https://epicbet.com/',
-
-    // Локально — видимый браузер, в CI — headless
     headless: isCI,
-
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-
     viewport: { width: 1366, height: 768 },
     locale: 'en-US',
     timezoneId: 'Europe/Tallinn',

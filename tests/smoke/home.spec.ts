@@ -1,8 +1,23 @@
-﻿import { test, expect } from '../../src/fixtures/base.fixture';
+import { test, expect } from '../../src/fixtures/base.fixture';
 
 test.describe('Smoke: home page', () => {
-  test('loads and shows logo', async ({ homePage }) => {
-    await expect(homePage.page).toHaveTitle(/./);
-    await expect(homePage.logo).toBeVisible({ timeout: 15_000 });
-  });
+  test(
+    'loads and shows main UI elements',
+    {
+      annotation: [
+        { type: 'severity', description: 'critical' },
+        { type: 'owner', description: 'Ilja323' },
+        { type: 'feature', description: 'Home' },
+      ],
+    },
+    async ({ homePage }) => {
+      await test.step('Verify page title is set', async () => {
+        await expect(homePage.page).toHaveTitle(/./);
+      });
+
+      await test.step('Verify search button is visible', async () => {
+        await expect(homePage.searchButton).toBeVisible({ timeout: 15_000 });
+      });
+    }
+  );
 });

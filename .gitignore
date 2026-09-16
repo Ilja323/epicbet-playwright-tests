@@ -1,8 +1,23 @@
-﻿node_modules/
+# dependencies
+node_modules/
+
+# Playwright artifacts
 playwright-report/
 test-results/
 blob-report/
 results.xml
-.DS_Store
-*.log
+
+# Allure artifacts
+allure-results/
+allure-report/
+
+# environment
 .env
+.env.local
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
