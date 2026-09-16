@@ -1,74 +1,51 @@
-import { Page, Locator } from '@playwright/test';
+﻿import { Locator, Page } from '@playwright/test';
+import { BasePage } from './BasePage';
+import { SearchOverlay } from './SearchOverlay';
 
-/**
- * MainPage — EpicBet home / main page.
- *
- * URL: /
- *
- * Structure:
- *  1. LOCATORS — all element selectors for this page (fill placeholders with real selectors)
- *  2. ACTIONS  — high-level user actions performed on this page
- */
-export class MainPage {
-  readonly page: Page;
+export class MainPage extends BasePage {
+  readonly url = 'https://epicbet.com/en/sports';
 
-  // ============================================================
   // LOCATORS
-  // ============================================================
-
-  /** Logo in the site header */
+  readonly header: Locator;
   readonly logo: Locator;
-
-  /** "Epic otsing" search trigger button in the header */
   readonly searchButton: Locator;
-
-  /** Link to the Sports section in the main navigation */
-  readonly sportsLink: Locator;
-
-  /** Generic main navigation container */
-  readonly mainNavigation: Locator;
-
-  // TODO: add more locators for elements you need on the main page, e.g.:
-  // readonly liveBettingLink: Locator;
-  // readonly promotionsBanner: Locator;
-  // readonly loginButton: Locator;
-  // readonly registerButton: Locator;
+  readonly footballLink: Locator;
+  readonly basketballLink: Locator;
+  readonly liveLink: Locator;
+  readonly searchOverlay: SearchOverlay;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
 
-    this.logo = page.locator('header img').first(); // TODO: replace with real selector
-
+    this.header = page.getByTestId('header');
+    this.logo = this.header.getByLabel('Epicbet');
     this.searchButton = page.getByTestId('search-button');
-
-    this.sportsLink = page
-      .getByRole('link', { name: /sport|спорт/i })
-      .first(); // TODO: verify on real page
-
-    this.mainNavigation = page.locator('header nav').first(); // TODO: replace with real selector
+    const categoryList = page.getByTestId('category-list');
+    this.footballLink = categoryList.getByRole('link', { name: 'Football', exact: true });
+    this.basketballLink = categoryList.getByRole('link', { name: 'Basketball', exact: true });
+    this.liveLink = categoryList.getByRole('link', { name: 'Live', exact: true });
+    this.searchOverlay = new SearchOverlay(page);
   }
 
-  // ============================================================
   // ACTIONS
-  // ============================================================
-
-  /** Open the main page */
   async goto(): Promise<void> {
-    await this.page.goto('/', { waitUntil: 'domcontentloaded' });
+    await this.open(this.url);
   }
 
-  /** Click the "Epic otsing" button to open the search UI */
-  async openSearch(): Promise<void> {
+  async openSearch(): Promise<SearchOverlay> {
     await this.searchButton.click();
+    return this.searchOverlay;
   }
 
-  /** Navigate to the Sports section via the main menu */
-  async navigateToSports(): Promise<void> {
-    await this.sportsLink.click();
-    await this.page.waitForLoadState('domcontentloaded');
+  async openFootball(): Promise<void> {
+    await this.clickAndWait(this.footballLink);
   }
 
-  // TODO: add more actions you need, e.g.:
-  // async openLive(): Promise<void> { ... }
-  // async openPromotions(): Promise<void> { ... }
+  async openBasketball(): Promise<void> {
+    await this.clickAndWait(this.basketballLink);
+  }
+
+  async openLive(): Promise<void> {
+    await this.clickAndWait(this.liveLink);
+  }
 }

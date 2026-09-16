@@ -12,7 +12,7 @@ Updated automatically on every push to main.
 
 - Playwright Test - test runner + browser automation
 - TypeScript - strict typing
-- Page Object Model (MainPage, EpicSearchPage) + custom fixtures
+- Page Object Model (BasePage, MainPage, FootballPage) + UI components + custom fixtures
 - Allure - test reporting
 - GitHub Actions CI + GitHub Pages
 
@@ -42,11 +42,6 @@ Updated automatically on every push to main.
     npm run test:navigation  # @navigation
     npm run test:search      # @search
 
-Or via CLI (PowerShell needs quotes around @):
-
-    npx playwright test --grep "@smoke"
-    npx playwright test --grep-invert "@e2e"
-
 ## Reports
 
 Single source of truth: Allure.
@@ -62,13 +57,9 @@ In CI, the report is published to GitHub Pages automatically.
     .
     ├── .github/workflows/     # CI + Pages deploy
     ├── src/
-    │   ├── pages/             # MainPage, EpicSearchPage
+    │   ├── pages/             # BasePage, MainPage, FootballPage, Betslip, SearchOverlay
     │   ├── fixtures/          # Custom Playwright fixtures
-    │   ├── utils/             # Constants, helpers
-    │   └── data/              # Test data
-    ├── tests/
-    │   ├── smoke/             # Fast smoke checks
-    │   └── e2e/               # User-flow scenarios
+    ├── tests/                 # All smoke and E2E scenarios
     ├── playwright.config.ts
     └── tsconfig.json
 
@@ -81,9 +72,11 @@ Each page class has two clearly separated sections:
 
 ## Test scenarios
 
-1. Smoke: MainPage - home page loads and main UI is visible
-2. E2E: navigation - user opens the Sports section
-3. E2E: Epic Search - user opens search and finds a result
+1. Smoke: Sports page shows the main controls
+2. E2E: navigation opens Football, Basketball, and Live
+3. E2E: Football event shows positive odds
+4. E2E: Search opens the first Manchester United match
+5. E2E: Visitor adds an odd to the betslip without signing in
 
 ## Cloudflare
 
