@@ -42,7 +42,6 @@ jobs:
         run: npx playwright test
         env:
           CI: 'true'
-        continue-on-error: true
 
       - name: Generate Allure report
         if: always()
@@ -81,10 +80,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: allure-report
-
-      - name: Fail job if tests failed
-        if: failure()
-        run: exit 1
 
   deploy-report:
     name: Deploy Allure report to GitHub Pages
