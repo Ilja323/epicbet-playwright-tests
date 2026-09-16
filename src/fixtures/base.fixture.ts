@@ -1,4 +1,4 @@
-﻿import { test as base, Page, TestInfo } from '@playwright/test';
+﻿import { test as base, Page } from '@playwright/test';
 import { MainPage } from '../pages/MainPage';
 
 const CF_MARKERS = [
@@ -43,7 +43,7 @@ type Fixtures = {
 };
 
 export const test = base.extend<Fixtures>({
-  mainPage: async ({ page }, use, testInfo: TestInfo) => {
+  mainPage: async ({ page }, use) => {
     const mainPage = new MainPage(page);
     await mainPage.goto();
 
@@ -52,11 +52,11 @@ export const test = base.extend<Fixtures>({
 
     const ready = await waitForAppReady(page);
     if (!ready) {
-      testInfo.skip(
-        true,
-        'Cloudflare challenge did not resolve - likely CI IP block. Run tests locally to validate assertions.'
+      const title = await page.title().catch(() => 'unknown');
+      const body = (await page.locator('body').innerText({ timeout: 2_000 }).catch(() => '')).slice(0, 300);
+      throw new Error(
+        `[cf] Application did not load in 60s. URL: ${page.url()} Title: ${title} Body: ${body}`
       );
-      return;
     }
 
     await page
