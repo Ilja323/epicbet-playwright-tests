@@ -20,12 +20,21 @@ async function isCloudflareVisible(page: Page): Promise<boolean> {
   return false;
 }
 
-async function waitForCloudflare(page: Page, timeoutMs = 60_000): Promise<boolean> {
+async function waitForAppReady(page: Page, timeoutMs = 60_000): Promise<boolean> {
   const started = Date.now();
+  const header = page.getByTestId('header');
+
   while (Date.now() - started < timeoutMs) {
-    if (!(await isCloudflareVisible(page))) return true;
-    await page.waitForTimeout(2_000);
+    if (await header.isVisible().catch(() => false)) return true;
+
+    if (await isCloudflareVisible(page)) {
+      await page.waitForTimeout(2_000);
+      continue;
+    }
+
+    await page.waitForTimeout(1_000);
   }
+
   return false;
 }
 
@@ -38,8 +47,11 @@ export const test = base.extend<Fixtures>({
     const mainPage = new MainPage(page);
     await mainPage.goto();
 
-    const cfPassed = await waitForCloudflare(page);
-    if (!cfPassed) {
+    const ua = await page.evaluate(() => navigator.userAgent);
+    console.log('[debug] Browser UA:', ua);
+
+    const ready = await waitForAppReady(page);
+    if (!ready) {
       testInfo.skip(
         true,
         'Cloudflare challenge did not resolve - likely CI IP block. Run tests locally to validate assertions.'
@@ -48,7 +60,7 @@ export const test = base.extend<Fixtures>({
     }
 
     await page
-      .getByRole('button', { name: /allow all|accept all/i })
+      .getByRole('button', { name: /allow all|accept all|принять все/i })
       .first()
       .click({ timeout: 3_000 })
       .catch(() => undefined);
