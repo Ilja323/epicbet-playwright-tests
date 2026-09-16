@@ -23,7 +23,7 @@ async function waitForCloudflare(page: Page): Promise<void> {
     await page.waitForTimeout(2000);
   }
 
-  console.warn('[cf] Cloudflare challenge did not pass in 60s');
+  throw new Error('[cf] Cloudflare challenge did not pass in 60s');
 }
 
 type Fixtures = {
@@ -35,6 +35,7 @@ export const test = base.extend<Fixtures>({
     const mainPage = new MainPage(page);
     await mainPage.goto();
     await waitForCloudflare(page);
+    await page.getByTestId('header').waitFor({ state: 'visible', timeout: 15_000 });
     await page.getByRole('button', { name: 'Allow all' }).click().catch(() => undefined);
     await use(mainPage);
   },

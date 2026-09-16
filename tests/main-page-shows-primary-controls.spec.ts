@@ -7,7 +7,6 @@ test.describe('Smoke: Sports page loads', () => {
       { type: 'severity', description: 'Critical: the Sports page shows its primary controls' },
       { type: 'owner', description: 'Ilja323' },
       { type: 'description', description: 'Checks that the Sports page loads with the main navigation and search control.' },
-      { type: 'story', description: 'SMOKE-001' },
     ],
   }, async ({ mainPage }) => {
     await expect(mainPage.header).toBeVisible();

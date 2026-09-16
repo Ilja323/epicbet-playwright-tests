@@ -7,7 +7,6 @@ test('Visitor opens the first football event and sees positive odds', {
     { type: 'severity', description: 'Critical: the first football event shows usable odds' },
     { type: 'owner', description: 'Ilja323' },
     { type: 'description', description: 'Checks that the first football match is clickable and displays positive coefficients.' },
-    { type: 'story', description: 'E2E-ODDS-001' },
   ],
 }, async ({ mainPage }) => {
   await mainPage.openFootball();

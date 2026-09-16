@@ -5,11 +5,12 @@ const TEST_USER_AGENT =
   '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 SisuTestAssignment';
 
 const isCI = !!process.env.CI;
+const isHeadless = process.env.PW_HEADLESS !== 'false';
 
 export default defineConfig({
   testDir: './tests',
 
-  // Cloudflare throttling — один воркер
+  // Cloudflare throttling — one worker to avoid triggering the anti-bot mechanism
   fullyParallel: false,
   workers: 1,
 
@@ -41,7 +42,7 @@ export default defineConfig({
 
   use: {
     baseURL: process.env.BASE_URL ?? 'https://epicbet.com/',
-    headless: isCI,
+    headless: isCI ? isHeadless : false,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

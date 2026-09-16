@@ -39,9 +39,10 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run Playwright tests
-        run: npx playwright test
+        run: xvfb-run --auto-servernum npx playwright test
         env:
           CI: 'true'
+          PW_HEADLESS: 'false'
 
       - name: Generate Allure report
         if: always()
