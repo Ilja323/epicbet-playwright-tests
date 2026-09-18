@@ -11,6 +11,8 @@ const CF_MARKERS = [
   'iframe[src*="challenges.cloudflare.com"]',
 ];
 
+const REGION_RESTRICTION_MARKER = 'text=/restricted region/i';
+
 async function isCloudflareVisible(page: Page): Promise<boolean> {
   for (const marker of CF_MARKERS) {
     const visible = await page
@@ -58,6 +60,17 @@ export const test = base.extend<Fixtures>({
       const title = await page.title().catch(() => 'unknown');
       const body = (await page.locator('body').innerText({ timeout: 2_000 }).catch(() => '')).slice(0, 300);
       console.error(`[cf] Page did not become ready. URL: ${page.url()} Title: ${title} Body: ${body}`);
+      const regionRestricted = await page
+        .locator(REGION_RESTRICTION_MARKER)
+        .first()
+        .isVisible()
+        .catch(() => false);
+      if (regionRestricted) {
+        throw new Error(
+          `[region] EpicBet returned Restricted region for this runner IP. ` +
+          'Use a runner or proxy located in an allowed region.'
+        );
+      }
       throw new Error(
         `[cf] Application did not load in 60s. URL: ${page.url()} Title: ${title} Body: ${body}`
       );
