@@ -77,8 +77,7 @@ export const test = base.extend<Fixtures>({
     }
 
     await page
-      .getByRole('button', { name: /allow all|accept all|принять все/i })
-      .first()
+      .getByRole('button', { name: 'Allow all', exact: true })
       .click({ timeout: 3_000 })
       .catch(() => undefined);
 
