@@ -5,6 +5,9 @@ const CF_MARKERS = [
   'text=/just a moment/i',
   'text=/checking your browser/i',
   'text=/verify you are human/i',
+  'text=/attention required/i',
+  'text=/access denied/i',
+  'text=/enable cookies/i',
   'iframe[src*="challenges.cloudflare.com"]',
 ];
 
@@ -54,6 +57,7 @@ export const test = base.extend<Fixtures>({
     if (!ready) {
       const title = await page.title().catch(() => 'unknown');
       const body = (await page.locator('body').innerText({ timeout: 2_000 }).catch(() => '')).slice(0, 300);
+      console.error(`[cf] Page did not become ready. URL: ${page.url()} Title: ${title} Body: ${body}`);
       throw new Error(
         `[cf] Application did not load in 60s. URL: ${page.url()} Title: ${title} Body: ${body}`
       );
