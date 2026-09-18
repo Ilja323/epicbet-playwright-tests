@@ -4,7 +4,6 @@ test('Visitor opens Football, then Basketball, then Live from Sports', {
   tag: ['@e2e', '@navigation', '@critical'],
   annotation: [
     { type: 'severity', description: 'Critical: Sports navigation opens three categories' },
-    { type: 'owner', description: 'Ilja323' },
     { type: 'description', description: 'Checks the Football, Basketball, and Live navigation sequence.' },
   ],
 }, async ({ mainPage }) => {

@@ -5,7 +5,6 @@ test('Visitor selects an odd and sees it in the betslip without signing in', {
   tag: ['@e2e', '@betslip', '@critical'],
   annotation: [
     { type: 'severity', description: 'Critical: a visitor can add an odd without login' },
-    { type: 'owner', description: 'Ilja323' },
     { type: 'description', description: 'Checks that selecting an odd opens the betslip with a visible coefficient.' },
   ],
 }, async ({ mainPage }) => {

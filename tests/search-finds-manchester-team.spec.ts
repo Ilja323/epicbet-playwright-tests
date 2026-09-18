@@ -4,7 +4,6 @@ test('Visitor searches for Manchester United and opens the first match', {
   tag: ['@e2e', '@search'],
   annotation: [
     { type: 'severity', description: 'Normal: search finds a Manchester team' },
-    { type: 'owner', description: 'Ilja323' },
     { type: 'description', description: 'Checks that the first Manchester United search result opens its match page.' },
   ],
 }, async ({ mainPage }) => {
