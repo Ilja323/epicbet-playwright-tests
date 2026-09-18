@@ -1,14 +1,14 @@
-import { Locator, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 
 export class Betslip {
   // LOCATORS
-  readonly container: Locator;
-  readonly selections: Locator;
-  readonly toggle: Locator;
-  readonly stakeInput: Locator;
-  readonly placeBetButton: Locator;
-  readonly registrationDialog: Locator;
-  readonly closeRegistrationButton: Locator;
+  readonly toggle;
+  readonly container;
+  readonly selections;
+  readonly stakeInput;
+  readonly placeBetButton;
+  readonly registrationDialog;
+  readonly closeRegistrationButton;
 
   constructor(page: Page) {
     this.toggle = page.getByTestId('betslip-button');

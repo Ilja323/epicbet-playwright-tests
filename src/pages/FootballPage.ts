@@ -1,15 +1,15 @@
-import { Locator, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { Betslip } from './Betslip';
 
 export class FootballPage {
   // LOCATORS
-  readonly firstOutcome: Locator;
-  readonly outcomeButtons: Locator;
+  readonly outcomeButtons;
+  readonly firstOutcome;
   readonly betslip: Betslip;
 
   constructor(page: Page) {
     this.outcomeButtons = page.locator('[data-testid="outcome-button"]:not([disabled])');
-    this.firstOutcome = this.outcomeButtons.first();
+    this.firstOutcome = this.outcomeButtons.nth(0);
     this.betslip = new Betslip(page);
   }
 

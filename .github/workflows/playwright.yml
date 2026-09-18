@@ -6,6 +6,19 @@ on:
   pull_request:
     branches: [main, master]
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Playwright tag to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - '@smoke'
+          - '@e2e'
+          - '@critical'
+          - '@navigation'
+          - '@search'
 
 permissions:
   contents: read
@@ -39,7 +52,12 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run Playwright tests
-        run: xvfb-run --auto-servernum npx playwright test
+        run: |
+          if [ "${{ inputs.tag || 'all' }}" = "all" ]; then
+            xvfb-run --auto-servernum npx playwright test
+          else
+            xvfb-run --auto-servernum npx playwright test --grep "${{ inputs.tag }}"
+          fi
         env:
           CI: 'true'
           PW_HEADLESS: 'false'

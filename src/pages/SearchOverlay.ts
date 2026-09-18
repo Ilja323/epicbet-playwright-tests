@@ -1,16 +1,16 @@
-import { Locator, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 
 export class SearchOverlay {
   readonly page: Page;
 
   // LOCATORS
-  readonly input: Locator;
-  readonly firstMatchResult: Locator;
+  readonly input;
+  readonly firstMatchResult;
 
   constructor(page: Page) {
     this.page = page;
     this.input = page.getByTestId('search-input');
-    this.firstMatchResult = page.getByText('Manchester United', { exact: true }).first().locator('..');
+    this.firstMatchResult = page.getByText('Manchester United', { exact: true }).locator('..');
   }
 
   // ACTIONS

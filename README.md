@@ -1,21 +1,3 @@
-# EpicBet - Playwright Test Assignment
-
-Automated end-to-end tests for [epicbet.com](https://epicbet.com/) written in TypeScript with Playwright.
-
-## Live Allure Report
-
-https://Ilja323.github.io/epicbet-playwright-tests/
-
-Updated automatically on every push to main.
-
-## Tech stack
-
-- Playwright Test - test runner + browser automation
-- TypeScript - strict typing
-- Page Object Model (BasePage, MainPage, FootballPage) + UI components + custom fixtures
-- Allure - test reporting
-- GitHub Actions CI + GitHub Pages
-
 ## Requirements
 
 - Node.js 20+
@@ -42,6 +24,17 @@ Updated automatically on every push to main.
     npm run test:navigation  # @navigation
     npm run test:search      # @search
 
+## Manual GitHub Actions run
+
+Use GitHub Actions → Playwright Tests → Run workflow and select a tag:
+
+- all
+- @smoke
+- @e2e
+- @critical
+- @navigation
+- @search
+
 ## Reports
 
 Single source of truth: Allure.
@@ -49,8 +42,6 @@ Single source of truth: Allure.
     npm run allure:generate   # build HTML from allure-results/
     npm run allure:open       # open generated report locally
     npm run allure:serve      # generate + serve + auto-open
-
-In CI, the report is published to GitHub Pages automatically.
 
 ## Project structure
 
@@ -63,24 +54,7 @@ In CI, the report is published to GitHub Pages automatically.
     ├── playwright.config.ts
     └── tsconfig.json
 
-## Page Object structure
-
-Each page class has two clearly separated sections:
-
-- LOCATORS — all element selectors
-- ACTIONS — high-level user actions
-
-## Test scenarios
-
-1. Smoke: Sports page shows the main controls
-2. E2E: navigation opens Football, Basketball, and Live
-3. E2E: Football event shows positive odds
-4. E2E: Search opens the first Manchester United match
-5. E2E: Visitor adds an odd to the betslip without signing in
-
 ## Cloudflare
-
-The assignment mentions Cloudflare checks. We handle them via:
 
 - SisuTestAssignment suffix in the browser User-Agent
 - workers: 1 to avoid rate-limiting
