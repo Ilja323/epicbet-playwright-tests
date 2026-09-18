@@ -5,7 +5,9 @@ const TEST_USER_AGENT =
   '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 SisuTestAssignment';
 
 const isCI = !!process.env.CI;
-const isHeadless = process.env.PW_HEADLESS !== 'false';
+const shouldRunHeadless = process.env.PW_HEADLESS
+  ? process.env.PW_HEADLESS === 'true'
+  : isCI;
 
 export default defineConfig({
   testDir: './tests',
@@ -42,7 +44,7 @@ export default defineConfig({
 
   use: {
     baseURL: process.env.BASE_URL ?? 'https://epicbet.com/',
-    headless: isCI ? isHeadless : false,
+    headless: shouldRunHeadless,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
