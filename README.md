@@ -39,6 +39,8 @@ Use GitHub Actions → Playwright Tests → Run workflow and select a tag:
 
 Single source of truth: Allure.
 
+    npm run allure:clean      # remove results and report from previous runs
+    npm test                  # create results for the current run
     npm run allure:generate   # build HTML from allure-results/
     npm run allure:open       # open generated report locally
     npm run allure:serve      # generate + serve + auto-open

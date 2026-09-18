@@ -9,9 +9,9 @@ export class MainPage extends BasePage {
   readonly header = this.page.getByTestId('header');
   readonly logo = this.header.getByLabel('Epicbet');
   readonly searchButton = this.page.getByTestId('search-button');
-  readonly footballLink = this.page.getByTestId('category-button').filter({ hasText: 'Football' });
-  readonly basketballLink = this.page.getByTestId('category-button').filter({ hasText: 'Basketball' });
-  readonly liveLink = this.page.getByTestId('category-button').filter({ hasText: 'Live' });
+  readonly footballLink = this.page.getByRole('link', { name: 'Football', exact: true });
+  readonly basketballLink = this.page.getByRole('link', { name: 'Basketball', exact: true });
+  readonly liveLink = this.page.getByRole('link', { name: 'Live', exact: true });
   readonly searchOverlay = new SearchOverlay(this.page);
 
   constructor(page: Page) {

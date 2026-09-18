@@ -51,16 +51,18 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Clean previous Allure results
+        run: npm run allure:clean
+
       - name: Run Playwright tests
         run: |
           if [ "${{ inputs.tag || 'all' }}" = "all" ]; then
-            xvfb-run --auto-servernum npx playwright test
+            npx playwright test
           else
-            xvfb-run --auto-servernum npx playwright test --grep "${{ inputs.tag }}"
+            npx playwright test --grep "${{ inputs.tag }}"
           fi
         env:
           CI: 'true'
-          PW_HEADLESS: 'false'
 
       - name: Generate Allure report
         if: always()
